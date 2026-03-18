@@ -17,10 +17,21 @@
 
     <div class="page-wrap">
 
+        <!-- Home Button -->
+        <div class="home-nav">
+            <a href="https://file-pro.netlify.app/" class="home-btn" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                <span>Main Website</span>
+            </a>
+        </div>
+
         <!-- Header -->
         <header class="site-header">
             <div class="header-emblem">
-                <!-- Scales of justice SVG -->
                 <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
                     <rect x="30" y="8" width="4" height="48" rx="2" />
                     <rect x="16" y="8" width="32" height="4" rx="2" />
@@ -37,7 +48,7 @@
                 </svg>
             </div>
             <h1>Gujarat <span>Legal Fee</span> Calculator</h1>
-            <p>Court Fees &amp; Probate Fees · Gujarat Court-fees Act, 2004</p>
+            <p>Court Fees &amp; Probate Fees &middot; Gujarat Court-fees Act, 2004</p>
         </header>
 
         <!-- Main Tabs -->
@@ -63,12 +74,12 @@
             </button>
         </div>
 
-        <!-- ══════════ COURT FEE PANEL ══════════ -->
+        <!-- ======== COURT FEE PANEL ======== -->
         <div class="tab-panel active" id="panel-court">
-
             <div class="card">
                 <div class="card-title">Court Fee &amp; Advocate Fee Calculator</div>
-                <div class="card-subtitle">As per The Gujarat Court-fees Act, 2004 · Accurate table-based lookup</div>
+                <div class="card-subtitle">As per The Gujarat Court-fees Act, 2004 &middot; Accurate table-based lookup
+                </div>
 
                 <!-- Mode Toggle -->
                 <div class="mode-toggle">
@@ -76,7 +87,7 @@
                     <button class="mode-btn" id="modeBtn-diff">Different Amounts</button>
                 </div>
 
-                <!-- Same Amount Section -->
+                <!-- Same Amount -->
                 <div id="court-same">
                     <div class="info-banner">
                         <strong>Same Amount Mode:</strong> Use when the Introduced Amount and Approved Amount of the
@@ -85,27 +96,26 @@
                     <div class="field-wrap">
                         <label>Suit / Claim Amount</label>
                         <div class="rupee-input">
-                            <span class="rupee-symbol">₹</span>
+                            <span class="rupee-symbol">&#8377;</span>
                             <input type="number" id="cf-amount" placeholder="Enter amount" min="0" />
                         </div>
                     </div>
-
                     <div class="result-card">
                         <div class="result-row">
                             <span class="result-label">Suit / Claim Amount</span>
-                            <span class="result-value" id="cf-disp-amount">₹ 0.00</span>
+                            <span class="result-value" id="cf-disp-amount">&#8377; 0.00</span>
                         </div>
                         <div class="result-row">
                             <span class="result-label">Court Fee</span>
-                            <span class="result-value" id="cf-disp-fee">₹ 0.00</span>
+                            <span class="result-value" id="cf-disp-fee">&#8377; 0.00</span>
                         </div>
                         <div class="result-row">
                             <span class="result-label">Advocate Fee</span>
-                            <span class="result-value" id="cf-disp-adv">₹ 0.00</span>
+                            <span class="result-value" id="cf-disp-adv">&#8377; 0.00</span>
                         </div>
                         <div class="result-row total-row">
                             <span class="result-label">Total Amount</span>
-                            <span class="result-value" id="cf-disp-total">₹ 0.00</span>
+                            <span class="result-value" id="cf-disp-total">&#8377; 0.00</span>
                         </div>
                     </div>
                     <div class="fee-alert" id="cf-alert">
@@ -116,11 +126,11 @@
                             <line x1="12" y1="9" x2="12" y2="13" />
                             <line x1="12" y1="17" x2="12.01" y2="17" />
                         </svg>
-                        Maximum payable court fee is ₹75,000.
+                        Maximum payable court fee is &#8377;75,000.
                     </div>
                 </div>
 
-                <!-- Different Amounts Section -->
+                <!-- Different Amounts -->
                 <div id="court-diff" style="display:none;">
                     <div class="info-banner">
                         <strong>Different Amounts Mode:</strong> Court fee is calculated on the <em>Introduced
@@ -130,35 +140,34 @@
                         <div class="field-wrap">
                             <label>Introduced Amount</label>
                             <div class="rupee-input">
-                                <span class="rupee-symbol">₹</span>
+                                <span class="rupee-symbol">&#8377;</span>
                                 <input type="number" id="cf-introduced" placeholder="Introduced amount" min="0" />
                             </div>
                         </div>
                         <div class="field-wrap">
                             <label>Approved Amount</label>
                             <div class="rupee-input">
-                                <span class="rupee-symbol">₹</span>
+                                <span class="rupee-symbol">&#8377;</span>
                                 <input type="number" id="cf-approved" placeholder="Approved amount" min="0" />
                             </div>
                         </div>
                     </div>
-
                     <div class="result-card">
                         <div class="result-row">
                             <span class="result-label">Approved Amount</span>
-                            <span class="result-value" id="cfd-disp-approved">₹ 0.00</span>
+                            <span class="result-value" id="cfd-disp-approved">&#8377; 0.00</span>
                         </div>
                         <div class="result-row">
                             <span class="result-label">Court Fee (on Introduced Amount)</span>
-                            <span class="result-value" id="cfd-disp-fee">₹ 0.00</span>
+                            <span class="result-value" id="cfd-disp-fee">&#8377; 0.00</span>
                         </div>
                         <div class="result-row">
                             <span class="result-label">Advocate Fee (on Approved Amount)</span>
-                            <span class="result-value" id="cfd-disp-adv">₹ 0.00</span>
+                            <span class="result-value" id="cfd-disp-adv">&#8377; 0.00</span>
                         </div>
                         <div class="result-row total-row">
                             <span class="result-label">Total Amount</span>
-                            <span class="result-value" id="cfd-disp-total">₹ 0.00</span>
+                            <span class="result-value" id="cfd-disp-total">&#8377; 0.00</span>
                         </div>
                     </div>
                     <div class="fee-alert" id="cfd-alert">
@@ -169,34 +178,32 @@
                             <line x1="12" y1="9" x2="12" y2="13" />
                             <line x1="12" y1="17" x2="12.01" y2="17" />
                         </svg>
-                        Maximum payable court fee is ₹75,000.
+                        Maximum payable court fee is &#8377;75,000.
                     </div>
                 </div>
             </div>
-
         </div>
 
-        <!-- ══════════ PROBATE PANEL ══════════ -->
+        <!-- ======== PROBATE PANEL ======== -->
         <div class="tab-panel" id="panel-probate">
-
             <div class="card">
                 <div class="card-title">Probate Court Fee Calculator</div>
-                <div class="card-subtitle">Progressive rate structure · Capped at ₹75,000 · Gujarat High Court Rules
-                </div>
+                <div class="card-subtitle">Progressive rate structure &middot; Capped at &#8377;75,000 &middot; Gujarat
+                    High Court Rules</div>
 
                 <div class="info-banner">
                     <strong>Rate Structure:</strong>
-                    No fee up to ₹1,000 &nbsp;·&nbsp;
-                    2% from ₹1,001–₹50,000 &nbsp;·&nbsp;
-                    4% from ₹50,001–₹2,00,000 &nbsp;·&nbsp;
-                    6% from ₹2,00,001–₹3,00,000 &nbsp;·&nbsp;
-                    7.5% above ₹3,00,000 (max ₹75,000)
+                    No fee up to &#8377;1,000 &nbsp;&middot;&nbsp;
+                    2% from &#8377;1,001&ndash;&#8377;50,000 &nbsp;&middot;&nbsp;
+                    4% from &#8377;50,001&ndash;&#8377;2,00,000 &nbsp;&middot;&nbsp;
+                    6% from &#8377;2,00,001&ndash;&#8377;3,00,000 &nbsp;&middot;&nbsp;
+                    7.5% above &#8377;3,00,000 (max &#8377;75,000)
                 </div>
 
                 <div class="field-wrap">
                     <label>Probate Value</label>
                     <div class="rupee-input">
-                        <span class="rupee-symbol">₹</span>
+                        <span class="rupee-symbol">&#8377;</span>
                         <input type="number" id="pb-amount" placeholder="Enter probate value" min="0" />
                     </div>
                 </div>
@@ -204,15 +211,15 @@
                 <div class="result-card">
                     <div class="result-row">
                         <span class="result-label">Probate Value</span>
-                        <span class="result-value" id="pb-disp-amount">₹ 0.00</span>
+                        <span class="result-value" id="pb-disp-amount">&#8377; 0.00</span>
                     </div>
                     <div class="result-row">
                         <span class="result-label">Court Fee</span>
-                        <span class="result-value" id="pb-disp-fee">₹ 0.00</span>
+                        <span class="result-value" id="pb-disp-fee">&#8377; 0.00</span>
                     </div>
                     <div class="result-row total-row">
                         <span class="result-label">Total Amount</span>
-                        <span class="result-value" id="pb-disp-total">₹ 0.00</span>
+                        <span class="result-value" id="pb-disp-total">&#8377; 0.00</span>
                     </div>
                 </div>
                 <div class="fee-alert" id="pb-alert">
@@ -221,13 +228,12 @@
                         <line x1="12" y1="9" x2="12" y2="13" />
                         <line x1="12" y1="17" x2="12.01" y2="17" />
                     </svg>
-                    Maximum payable court fee is ₹75,000.
+                    Maximum payable court fee is &#8377;75,000.
                 </div>
             </div>
-
         </div>
 
-        <!-- Disclaimer Banner -->
+        <!-- Disclaimer -->
         <div class="disclaimer-banner">
             <div class="disclaimer-icon">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -252,11 +258,13 @@
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
-                <p><a href="mailto:parimalhodar.dev@gmail.com">parimalhodar.dev@gmail.com</a><br />For feedback,
-                    corrections or suggestions</p>
+                <p>
+                    <a href="mailto:parimal.court@gmail.com">parimal.court@gmail.com</a><br />
+                    For feedback, corrections or suggestions
+                </p>
             </div>
             <div class="footer-bottom">
-                © 2025–2026 Parimal J. Hodar. All rights reserved.
+                &copy; 2025&ndash;2026 Parimal J. Hodar. All rights reserved.
             </div>
         </footer>
 
@@ -265,19 +273,19 @@
     <script>
         // ─── Indian Number Formatter ───────────────────────────────
         function fmt(n) {
-            if (isNaN(n)) return '₹ —';
+            if (isNaN(n)) return '\u20b9 \u2014';
             var fixed = n.toFixed(2);
             var parts = fixed.split('.');
-            var int = parts[0];
-            var dec = parts[1];
-            var last3 = int.slice(-3);
-            var rest = int.slice(0, -3);
+            var intPart = parts[0];
+            var decPart = parts[1];
+            var last3 = intPart.slice(-3);
+            var rest = intPart.slice(0, -3);
             if (rest) last3 = ',' + last3;
-            var res = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + last3 + '.' + dec;
-            return '₹ ' + res;
+            var res = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + last3 + '.' + decPart;
+            return '\u20b9 ' + res;
         }
 
-        // ─── Court Fee Table (cleaned) ─────────────────────────────
+        // ─── Court Fee Table ───────────────────────────────────────
         function getCourtFeeTable() {
             return [
                 [1, 1000, 10], [1001, 2000, 200], [2001, 3000, 300], [3001, 4000, 400], [4001, 5000, 500],
@@ -318,24 +326,20 @@
 
         // ─── Advocate Fee Table ────────────────────────────────────
         function getAdvocateFeeTable() {
-            const rows = [];
-            // 0–5000: ₹10 per ₹100
-            for (let i = 0; i < 50; i++) rows.push([i * 100, i * 100 + 100, (i + 1) * 10]);
-            // 5001–10000: ₹7.5 per ₹100 starting from 500
-            for (let i = 0; i < 50; i++) rows.push([5001 + i * 100, 5100 + i * 100, 500 + i * 7.5 + 7.5]);
-            // 10001–20000: ₹5 per ₹100 starting from 875
-            for (let i = 0; i < 100; i++) rows.push([10001 + i * 100, 10100 + i * 100, 875 + i * 5 + 5]);
-            // 20001–500000: ₹2 per ₹100
-            for (let i = 0; i < 4800; i++) rows.push([20001 + i * 100, 20100 + i * 100, 1375 + i * 2 + 2]);
-            // 500001+: 0.5% of income
-            rows.push([500001, Infinity, (v) => 4475 + (v - 500000) * 0.005]);
+            var rows = [];
+            var i;
+            for (i = 0; i < 50; i++) rows.push([i * 100, i * 100 + 100, (i + 1) * 10]);
+            for (i = 0; i < 50; i++) rows.push([5001 + i * 100, 5100 + i * 100, 500 + i * 7.5 + 7.5]);
+            for (i = 0; i < 100; i++) rows.push([10001 + i * 100, 10100 + i * 100, 875 + i * 5 + 5]);
+            for (i = 0; i < 4800; i++) rows.push([20001 + i * 100, 20100 + i * 100, 1375 + i * 2 + 2]);
+            rows.push([500001, Infinity, function (v) { return 4475 + (v - 500000) * 0.005; }]);
             return rows;
         }
 
         // ─── Fee Lookup ────────────────────────────────────────────
         function lookupFee(amount, table) {
-            for (let i = 0; i < table.length; i++) {
-                const r = table[i];
+            for (var i = 0; i < table.length; i++) {
+                var r = table[i];
                 if (amount >= r[0] && amount <= r[1]) {
                     return typeof r[2] === 'function' ? r[2](amount) : r[2];
                 }
@@ -343,30 +347,30 @@
             return 0;
         }
 
-        // Pre-build tables once
-        const CFT = getCourtFeeTable();
-        const AFT = getAdvocateFeeTable();
-
         // ─── Probate Fee ───────────────────────────────────────────
         function calcProbateFee(v) {
             if (v <= 1000) return 0;
             if (v <= 50000) return (v - 1000) * 0.02;
-            if (v <= 200000) return (49000) * 0.02 + (v - 50000) * 0.04;
+            if (v <= 200000) return 49000 * 0.02 + (v - 50000) * 0.04;
             if (v <= 300000) return 980 + 6000 + (v - 200000) * 0.06;
             return Math.min(980 + 6000 + 6000 + (v - 300000) * 0.075, 75000);
         }
 
+        // Build tables once
+        var CFT = getCourtFeeTable();
+        var AFT = getAdvocateFeeTable();
+
         // ─── Tab Switching ─────────────────────────────────────────
-        document.querySelectorAll('.tab-btn').forEach(btn => {
+        document.querySelectorAll('.tab-btn').forEach(function (btn) {
             btn.addEventListener('click', function () {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+                document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
                 this.classList.add('active');
                 document.getElementById('panel-' + this.dataset.tab).classList.add('active');
             });
         });
 
-        // ─── Mode Toggle (Court Fee) ───────────────────────────────
+        // ─── Mode Toggle ───────────────────────────────────────────
         document.getElementById('modeBtn-same').addEventListener('click', function () {
             this.classList.add('active');
             document.getElementById('modeBtn-diff').classList.remove('active');
@@ -382,16 +386,19 @@
 
         // ─── Court Fee: Same Amount ────────────────────────────────
         document.getElementById('cf-amount').addEventListener('input', function () {
-            const v = parseFloat(this.value);
+            var v = parseFloat(this.value);
             if (isNaN(v) || v < 0) {
-                ['cf-disp-amount', 'cf-disp-fee', 'cf-disp-adv', 'cf-disp-total'].forEach(id => document.getElementById(id).textContent = '₹ 0.00');
-                document.getElementById('cf-alert').classList.remove('show');
+                document.getElementById('cf-disp-amount').textContent = '\u20b9 0.00';
+                document.getElementById('cf-disp-fee').textContent = '\u20b9 0.00';
+                document.getElementById('cf-disp-adv').textContent = '\u20b9 0.00';
+                document.getElementById('cf-disp-total').textContent = '\u20b9 0.00';
                 document.getElementById('cf-disp-fee').classList.remove('maxed');
+                document.getElementById('cf-alert').classList.remove('show');
                 return;
             }
-            const cf = lookupFee(v, CFT);
-            const af = lookupFee(v, AFT);
-            const total = v + cf + af;
+            var cf = lookupFee(v, CFT);
+            var af = lookupFee(v, AFT);
+            var total = v + cf + af;
             document.getElementById('cf-disp-amount').textContent = fmt(v);
             document.getElementById('cf-disp-fee').textContent = fmt(cf);
             document.getElementById('cf-disp-adv').textContent = fmt(af);
@@ -407,17 +414,20 @@
 
         // ─── Court Fee: Different Amounts ─────────────────────────
         function calcDiff() {
-            const vi = parseFloat(document.getElementById('cf-introduced').value);
-            const va = parseFloat(document.getElementById('cf-approved').value);
+            var vi = parseFloat(document.getElementById('cf-introduced').value);
+            var va = parseFloat(document.getElementById('cf-approved').value);
             if (isNaN(vi) || isNaN(va) || vi < 0 || va < 0) {
-                ['cfd-disp-approved', 'cfd-disp-fee', 'cfd-disp-adv', 'cfd-disp-total'].forEach(id => document.getElementById(id).textContent = '₹ 0.00');
-                document.getElementById('cfd-alert').classList.remove('show');
+                document.getElementById('cfd-disp-approved').textContent = '\u20b9 0.00';
+                document.getElementById('cfd-disp-fee').textContent = '\u20b9 0.00';
+                document.getElementById('cfd-disp-adv').textContent = '\u20b9 0.00';
+                document.getElementById('cfd-disp-total').textContent = '\u20b9 0.00';
                 document.getElementById('cfd-disp-fee').classList.remove('maxed');
+                document.getElementById('cfd-alert').classList.remove('show');
                 return;
             }
-            const cf = lookupFee(vi, CFT);
-            const af = lookupFee(va, AFT);
-            const total = va + cf + af;
+            var cf = lookupFee(vi, CFT);
+            var af = lookupFee(va, AFT);
+            var total = va + cf + af;
             document.getElementById('cfd-disp-approved').textContent = fmt(va);
             document.getElementById('cfd-disp-fee').textContent = fmt(cf);
             document.getElementById('cfd-disp-adv').textContent = fmt(af);
@@ -435,16 +445,16 @@
 
         // ─── Probate Fee ───────────────────────────────────────────
         document.getElementById('pb-amount').addEventListener('input', function () {
-            const v = parseFloat(this.value);
+            var v = parseFloat(this.value);
             if (isNaN(v) || v < 0) {
-                document.getElementById('pb-disp-amount').textContent = '₹ 0.00';
-                document.getElementById('pb-disp-fee').textContent = '₹ 0.00';
-                document.getElementById('pb-disp-total').textContent = '₹ 0.00';
-                document.getElementById('pb-alert').classList.remove('show');
+                document.getElementById('pb-disp-amount').textContent = '\u20b9 0.00';
+                document.getElementById('pb-disp-fee').textContent = '\u20b9 0.00';
+                document.getElementById('pb-disp-total').textContent = '\u20b9 0.00';
                 document.getElementById('pb-disp-fee').classList.remove('maxed');
+                document.getElementById('pb-alert').classList.remove('show');
                 return;
             }
-            const fee = calcProbateFee(v);
+            var fee = calcProbateFee(v);
             document.getElementById('pb-disp-amount').textContent = fmt(v);
             document.getElementById('pb-disp-fee').textContent = fmt(fee);
             document.getElementById('pb-disp-total').textContent = fmt(v + fee);

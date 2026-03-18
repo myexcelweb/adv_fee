@@ -63,6 +63,51 @@ body::before {
 }
 
 /* ══════════════════════════════════
+   HOME BUTTON
+══════════════════════════════════ */
+.home-nav {
+    padding: 20px 0 0;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 50px;
+    color: var(--ink-light);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.22s ease;
+}
+
+.home-btn svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    transition: transform 0.22s ease;
+}
+
+.home-btn:hover {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(26, 107, 107, 0.28);
+    transform: translateY(-1px);
+}
+
+.home-btn:hover svg {
+    transform: scale(1.15);
+}
+
+/* ══════════════════════════════════
    HEADER
 ══════════════════════════════════ */
 .site-header {
