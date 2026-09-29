@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gujarat Advocate, Court-Fee & Probate Fee Calculator</title>
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--bd:#dbe1ec;--tx:#14213d;--mu:#5d6b85;--ac:#1d4ed8;--ac2:#1e40af;--ok:#15803d;--sl:#eef2f9;--warn:#fff7e0;--warnbd:#f0d68a;--warntx:#5c4400;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1419;--card:#1a2332;--bd:#2d3a4f;--tx:#e7ecf3;--mu:#8b9bb4;--ac:#3b82f6;--ac2:#2563eb;--ok:#4ade80;--sl:#243044;--warn:#2b2410;--warnbd:#6b5a1e;--warntx:#f3dc9a}}
+:root[data-theme="dark"]{--bg:#0f1419;--card:#1a2332;--bd:#2d3a4f;--tx:#e7ecf3;--mu:#8b9bb4;--ac:#3b82f6;--ac2:#2563eb;--ok:#4ade80;--sl:#243044;--warn:#2b2410;--warnbd:#6b5a1e;--warntx:#f3dc9a}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:auto}
+body{font-family:"Segoe UI",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--tx);padding:20px 14px;line-height:1.5}
+.wrap{max-width:760px;margin:auto}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:24px;box-shadow:0 8px 30px rgba(0,0,0,.08);margin-bottom:16px}
+h1{font-size:1.35rem;letter-spacing:-.02em}
+h2{font-size:1rem;margin:0 0 10px}
+.sub{color:var(--mu);font-size:.85rem;margin:4px 0 16px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--bd);margin-bottom:18px;overflow-x:auto}
+.tab{background:none;border:0;border-bottom:3px solid transparent;color:var(--mu);padding:10px 14px;font:600 .9rem inherit;font-family:inherit;cursor:pointer;white-space:nowrap}
+.tab.on{color:var(--ac);border-color:var(--ac)}
+.panel{display:none}.panel.on{display:block}
+label{display:block;font-size:.75rem;font-weight:600;color:var(--mu);margin:0 0 6px;text-transform:uppercase;letter-spacing:.04em}
+input[type=number],select{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:11px 13px;color:var(--tx);font:500 1rem inherit;font-family:inherit;outline:0}
+input:focus,select:focus{border-color:var(--ac)}
+.f{margin-bottom:14px}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.chk{display:flex;gap:8px;align-items:center;font-size:.9rem;margin-bottom:14px}
+.chk input{width:18px;height:18px}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:12px 20px;font:600 .95rem inherit;font-family:inherit;cursor:pointer;width:100%}
+.btn:hover{background:var(--ac2)}
+.hint{font-size:.8rem;color:var(--mu);margin:-8px 0 14px}
+.err{color:#dc2626;font-size:.85rem;margin-bottom:10px;display:none}
+.res{display:none;margin-top:18px}
+.tbl{overflow-x:auto;border:1px solid var(--bd);border-radius:12px;background:var(--sl)}
+table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:460px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--bd)}
+th{font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;color:var(--mu)}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+.adj td{color:var(--mu);font-style:italic}
+.total{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;background:var(--ac);color:#fff;border-radius:12px;padding:15px 18px}
+.total b{font-size:1.5rem;font-variant-numeric:tabular-nums}
+.basis{margin-top:10px;font-size:.82rem;color:var(--mu);border-left:3px solid var(--ac);padding:4px 10px}
+.warn{background:var(--warn);border:1px solid var(--warnbd);color:var(--warntx);border-radius:12px;padding:14px 16px;font-size:.84rem}
+.warn b{display:block;margin-bottom:4px}
+.src li{margin:0 0 8px 18px;font-size:.85rem}
+.src span{color:var(--mu)}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.th{background:var(--sl);border:1px solid var(--bd);color:var(--tx);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:.8rem}
+a{color:var(--ac);word-break:break-all}
+.foot{text-align:center;font-size:.75rem;color:var(--mu);padding:4px 0 12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="card">
+  <div class="top">
+    <div><h1>Gujarat Advocate Fee, Court-Fee &amp; Probate Fee Calculator</h1>
+    <p class="sub">Based on the Gujarat High Court Rules, 1993 (as amended up to 12.11.2024) and the Gujarat Court-Fees Act, 2004</p></div>
+    <button class="th" id="th" type="button">Theme</button>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab on" data-t="adv">Advocate Fee (Taxation)</button>
+    <button class="tab" data-t="cf">Court Fee (Plaint / Appeal)</button>
+    <button class="tab" data-t="pro">Probate Court-Fee</button>
+    <button class="tab" data-t="src">Sources &amp; Disclaimer</button>
+  </div>
+
+  <!-- ADVOCATE -->
+  <div class="panel on" id="adv">
+    <div class="f"><label for="case">Type of proceeding</label>
+      <select id="case"></select></div>
+    <div class="f" id="amtBox"><label for="amt">Value of subject matter (₹)</label>
+      <input type="number" id="amt" min="0" step="1" placeholder="e.g. 750000" inputmode="decimal"></div>
+    <div class="f" id="courtBox"><label for="court">Court (for minimum fee, Sch. A Rule XII)</label>
+      <select id="court">
+        <option value="100">High Court — min ₹ 100</option>
+        <option value="50" selected>District Court / Civil Judge — min ₹ 50</option>
+        <option value="30">Civil Judge (Small Cause / Mamlatdar type suit) — min ₹ 30</option>
+      </select></div>
+    <label class="chk" id="twoBox"><input type="checkbox" id="two"> Party engaged two advocates (Rule 442(i); value above ₹ 10,000, contested)</label>
+    <p class="err" id="aerr">Please enter a valid positive amount.</p>
+    <button class="btn" type="button" id="abtn">Calculate advocate fee</button>
+    <div class="res" id="ares"></div>
+
+    <h2 style="margin-top:22px">Scale — Schedule 'A', Rule I</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Value of subject matter</th><th>Advocate fee</th></tr></thead>
+      <tbody>
+      <tr><td>Up to ₹ 5,000</td><td>10%</td></tr>
+      <tr><td>₹ 5,000 – ₹ 10,000</td><td>₹ 500 + 7½% of remainder</td></tr>
+      <tr><td>₹ 10,000 – ₹ 20,000</td><td>₹ 875 + 5% of remainder</td></tr>
+      <tr><td>₹ 20,000 – ₹ 50,000</td><td>₹ 1,375 + 2% of remainder</td></tr>
+      <tr><td>₹ 50,000 – ₹ 1,00,000</td><td>₹ 1,975 + 1% of remainder</td></tr>
+      <tr><td>Above ₹ 1,00,000</td><td>₹ 2,475 + ½% of remainder</td></tr>
+      </tbody></table></div>
+  </div>
+
+  <!-- COURT FEE -->
+  <div class="panel" id="cf">
+    <div class="f"><label for="ccase">Type of plaint / relief</label><select id="ccase"></select></div>
+    <div class="f"><label for="camt">Amount / value of subject matter (₹)</label>
+      <input type="number" id="camt" min="0" step="1" placeholder="e.g. 850000" inputmode="decimal"></div>
+    <p class="hint" id="chint"></p>
+    <p class="err" id="cerr">Please enter a valid positive amount.</p>
+    <button class="btn" type="button" id="cbtn">Calculate court-fee</button>
+    <div class="res" id="cres"></div>
+    <div class="warn" style="margin-top:16px"><b>Note on the scale</b>
+      Article 1 (Schedule I) is worded in steps, but the Act's own "Table of rates of ad-valorem fees" gives different amounts below ₹ 1 lakh (e.g. ₹ 5,950 at ₹ 1,00,000), while the text steps agree with the table above ₹ 1 lakh. This calculator follows the Act's table and its stated rates (₹ 200 per ₹ 10,000 up to ₹ 10 lakh, ₹ 1,200 per lakh up to ₹ 20 lakh, ₹ 500 per lakh beyond; maximum ₹ 75,000). The table prints ₹ 10 for values up to ₹ 1,000, which breaks the ₹ 100-per-₹ 1,000 pattern; ₹ 100 is used here. Confirm with the Court's fee office for very small claims.</div>
+  </div>
+
+  <!-- PROBATE -->
+  <div class="panel" id="pro">
+    <div class="f"><label for="pamt">Value of estate / property (₹)</label>
+      <input type="number" id="pamt" min="0" step="1" placeholder="e.g. 1500000" inputmode="decimal"></div>
+    <p class="hint">Court-fee on probate or letters of administration — Schedule I, Article 10, read with Section 29.</p>
+    <p class="err" id="perr">Please enter a valid positive amount.</p>
+    <button class="btn" type="button" id="pbtn">Calculate probate fee</button>
+    <div class="res" id="pres"></div>
+  </div>
+
+  <!-- SOURCES -->
+  <div class="panel" id="src">
+    <h2>Legal sources used</h2>
+    <ul class="src">
+      <li><b>The Gujarat High Court Rules, 1993</b> (amended up to 12.11.2024) — Chapter on <i>Taxation of Advocates' Fees</i>: Rules 441–447 and Schedule 'A' (Rules I–XIII).<br>
+        <span>Rule I – scale on value of subject matter • Rules II &amp; VI – one-fourth fee (not decided on merits / execution) • Rule III – incapable of valuation (₹ 100) • Rule IV – undefended matrimonial (₹ 75), contested (ordinarily up to ₹ 500; default ₹ 200) • Rule VII – Art. 226 (₹ 250) / Art. 227 (₹ 150) • Rule VIII – tax references (₹ 300, up to ₹ 1,000) • Rule IX – revisions and specified Acts (₹ 100) • Rule XI – civil applications in High Court (₹ 100 / ₹ 50) • Rule XII – minimum fee by court • Rule XIII – fee covers services until final decree/order • Rule 442 – two advocates • Rule 445 – ₹ 100 where costs are unquantified • Rule 447 – Court may allow higher, lower or no fee.</span></li>
+      <li><b>Where each fee comes from</b>
+        <div class="tbl" style="margin-top:6px"><table style="min-width:520px"><thead><tr><th>Fee</th><th>Source</th><th>Provision</th><th>Pages</th></tr></thead><tbody>
+        <tr><td>Advocate fee</td><td>Gujarat High Court Rules, 1993</td><td>Ch. XXXI, Schedule A</td><td>170–171</td></tr>
+        <tr><td>Court fee</td><td>Gujarat Court-Fees Act, 2004</td><td>Schedule I, Article 1</td><td>28–35</td></tr>
+        <tr><td>Probate fee</td><td>Gujarat Court-Fees Act, 2004</td><td>Schedule I, Article 10</td><td>30</td></tr></tbody></table></div></li>
+      <li><b>Amendments checked:</b> Gujarat Act 6 of 2014 (Sch. I, Art. 15 — Land Acquisition reference fee changed from one-half to 10% of the ad valorem fee on the difference); Gujarat Act 10 of 2015 (amendments to Sections 3, 4, 14, 37, 38 and other provisions on payment of fee); Gujarat Act 14 of 2016 (Section 32 on process fees deleted). The Article 1 scale, Article 10 probate rates and Section 6 were not changed by these Acts as far as could be verified. The page text is taken from the 2004 Act PDF supplied by you, so check the latest consolidated text before relying on any provision.<br><span>Copies: Gujarat Government (cpahmedabad.gujarat.gov.in), PRS India (prsindia.org) and India Code carry the Act with amendments.</span></li>
+      <li><b>The Gujarat Court-Fees Act, 2004</b> (Gujarat Act No. 4 of 2004)<br>
+        <span>Section 6 – computation of fees in suits, clauses (1)–(20); Section 7 – Land Acquisition and Motor Vehicles appeals; Section 14 – decision on valuation; Schedule I, Arts. 1–9 and 15–17 – ad valorem fees on plaints, appeals and applications • Section 6 (valuation; Schedule A says the fee in landlord–tenant matters is computed on court-fee value, Section 6(20)) • Sections 8, 9 &amp; 14 – inquiry into and decision on valuation • Section 20(iv) – no fee on probate where value does not exceed ₹ 1,000 • Section 29 – valuation and payment of fee on probate / letters of administration (Third Schedule form) • Schedule I, Article 10 – probate rates: 2% (₹ 1,000–50,000), 4% (₹ 50,000–2 lakh), 6% (₹ 2–3 lakh), 7½% above ₹ 3 lakh, maximum ₹ 75,000.</span></li>
+    </ul>
+    <h2 style="margin-top:16px">Source links (verify here)</h2>
+    <ul class="src">
+      <li><b>Gujarat Court-Fees Act, 2004</b> — Gujarat Government (primary copy):<br>
+        <a href="https://cpahmedabad.gujarat.gov.in/Upload/ACT_GCF2004_202004122023.pdf" target="_blank" rel="noopener noreferrer">https://cpahmedabad.gujarat.gov.in/Upload/ACT_GCF2004_202004122023.pdf</a></li>
+      <li><b>Gujarat Court-Fees Act, 2004</b> — PRS India (with amendments of 2014, 2015, 2016):<br>
+        <a href="https://prsindia.org/files/bills_acts/acts_states/gujarat/2004/2004Gujarat4.pdf" target="_blank" rel="noopener noreferrer">https://prsindia.org/files/bills_acts/acts_states/gujarat/2004/2004Gujarat4.pdf</a></li>
+      <li><b>Gujarat Court-Fees Act, 2004</b> — India Code:<br>
+        <a href="https://www.indiacode.nic.in/bitstream/123456789/4551/1/courtfees.pdf" target="_blank" rel="noopener noreferrer">https://www.indiacode.nic.in/bitstream/123456789/4551/1/courtfees.pdf</a></li>
+      <li><b>Gujarat High Court Rules, 1993</b> (amended on 12.11.2024) — Gujarat High Court website:<br>
+        <a href="https://gujarathighcourt.nic.in/hccms/sites/default/files/rules_files/GHC_RULES_1993_AMENDED_ON_12.11.2024.pdf" target="_blank" rel="noopener noreferrer">https://gujarathighcourt.nic.in/hccms/sites/default/files/rules_files/GHC_RULES_1993_AMENDED_ON_12.11.2024.pdf</a></li>
+    </ul>
+    <h2 style="margin-top:16px">Not covered</h2>
+    <p style="font-size:.85rem;color:var(--mu);margin-bottom:16px">Fixed fees (Schedule II), refunds (Sections 15–17, 43), area-based declaration fees (Section 6(5)) and periodical-charge valuations (Section 6(2), (8)) are not calculated. Companies Act proceedings (Rule 444), Rule X commission fees, and separate-set or apportioned costs (Rule 443) need Court directions.</p>
+    <div class="warn"><b>⚠ Disclaimer &amp; limitation of responsibility</b>
+      This calculator is provided free, for general information and quick estimation only. It is not legal, financial or professional advice, and no advocate–client relationship is created by using it. It is a private tool and is not an official publication of the Gujarat High Court, the Government of Gujarat or any court.<br><br>
+      The results depend on the Court's discretion, on how the value of the subject matter is determined, and on the version of the Rules and the Act in force on the date of filing or taxation. The Court may allow a higher, lower or no fee (Rule 447), and the rates may have been amended after the versions cited here. The Court-Fees Act scale contains a discrepancy between its text and its rate table (see the Court Fee tab), and minor errors or omissions in this page cannot be ruled out.<br><br>
+      <b style="display:inline">The developer of this page accepts no responsibility or liability</b> for any error, omission, outdated rate, or for any loss, damage, penalty, shortfall of court-fee or dispute arising from the use of, or reliance on, any figure shown here. You use the calculator entirely at your own risk. Always verify the result against the official text at the source links above and with the Court's fee or taxing office, or a qualified advocate, before paying court-fee, filing, or preparing a bill of costs.</div>
+  </div>
+</div>
+<p class="foot">For information only — no liability of the developer. Sources: Gujarat High Court Rules, 1993 (Rules 441–447, Sch. A) • Gujarat Court-Fees Act, 2004 (Ss. 6, 20, 29; Sch. I Art. 10)</p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const INR=n=>"₹ "+Number(n).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});
+const ADV=[[5000,.10],[10000,.075],[20000,.05],[50000,.02],[100000,.01],[Infinity,.005]];
+const PRO=[[1000,0],[50000,.02],[200000,.04],[300000,.06],[Infinity,.075]];
+const lakh=n=>n>=1e7?(n/1e7)+" crore":n>=1e5?(n/1e5)+" lakh":n.toLocaleString("en-IN");
+const CASES=[
+ {k:"i",t:"Suit / appeal / application decided on merits (Rule I)",m:1,r:"Sch. A, Rule I"},
+ {k:"ii",t:"Not decided on merits; summary suit; claim admitted before evidence; other proceedings (Rule II) — ¼ fee",m:.25,r:"Sch. A, Rule II"},
+ {k:"vi",t:"Execution proceedings (Rule VI) — ¼ fee",m:.25,r:"Sch. A, Rule VI"},
+ {k:"iii",t:"Subject matter incapable of valuation (Rule III)",f:100,r:"Sch. A, Rule III — Court's discretion; ₹ 100 in absence of orders"},
+ {k:"iv1",t:"Matrimonial — undefended (Rule IV)",f:75,r:"Sch. A, Rule IV — ordinarily ₹ 75"},
+ {k:"iv2",t:"Matrimonial — contested (Rule IV)",f:200,r:"Sch. A, Rule IV — ₹ 200 by default; ordinarily not above ₹ 500 if Court so orders"},
+ {k:"vii1",t:"Application under Article 226 (Rule VII)",f:250,r:"Sch. A, Rule VII — Court may allow higher fee"},
+ {k:"vii2",t:"Application under Article 227 (Rule VII)",f:150,r:"Sch. A, Rule VII — Court may allow higher fee"},
+ {k:"viii",t:"Tax reference (Income-tax, Sales-tax etc.) (Rule VIII)",f:300,r:"Sch. A, Rule VIII — ordinarily ₹ 300; Court may award up to ₹ 1,000"},
+ {k:"ix",t:"Revision / Sec. 113 CPC reference / Guardians & Wards, Trusts, Insolvency, Succession Part VII &amp; X (Rule IX)",f:100,r:"Sch. A, Rule IX"},
+ {k:"xi1",t:"Civil application in High Court not otherwise provided — contested (Rule XI)",f:100,r:"Sch. A, Rule XI"},
+ {k:"xi2",t:"Civil application in High Court not otherwise provided — uncontested (Rule XI)",f:50,r:"Sch. A, Rule XI"},
+ {k:"445",t:"Costs awarded without specifying amount (Rule 445)",f:100,r:"Rule 445"}
+];
+$("case").innerHTML=CASES.map((c,i)=>`<option value="${i}">${c.t}</option>`).join("");
+
+function slabs(amt,S,labelFn){
+  let prev=0,tot=0,rows=[];
+  for(const [up,r] of S){
+    if(amt<=prev)break;
+    const w=Math.min(amt,up)-prev, fee=w*r; tot+=fee;
+    rows.push({l:labelFn(prev,up),w,r,fee}); prev=up;
+  }
+  return {tot,rows};
+}
+const lab=(p,u)=>u===Infinity?"Above ₹ "+lakh(p):(p===0?"Up to ₹ "+lakh(u):"₹ "+lakh(p)+" – ₹ "+lakh(u));
+const pct=r=>(r*100).toString().replace(/\.0+$/,"")+"%";
+function table(rows,extra){
+  return `<div class="tbl"><table><thead><tr><th>Slab</th><th class="r">Amount in slab</th><th class="r">Rate</th><th class="r">Fee</th></tr></thead><tbody>`+
+   rows.map(x=>`<tr><td>${x.l}</td><td class="r">${INR(x.w)}</td><td class="r">${pct(x.r)}</td><td class="r">${INR(x.fee)}</td></tr>`).join("")+(extra||"")+`</tbody></table></div>`;
+}
+const adj=(t,v)=>`<tr class="adj"><td colspan="3">${t}</td><td class="r">${v}</td></tr>`;
+const total=(l,v)=>`<div class="total"><span>${l}</span><b>${INR(v)}</b></div>`;
+
+function sync(){
+  const c=CASES[$("case").value], scale=c.m!==undefined;
+  $("amtBox").style.display=$("courtBox").style.display=scale?"block":"none";
+  $("twoBox").style.display=(c.m===1)?"flex":"none";
+  $("ares").style.display="none";
+}
+$("case").onchange=sync; sync();
+
+function calcAdv(){
+  const c=CASES[$("case").value], out=$("ares"); $("aerr").style.display="none";
+  if(c.f!==undefined){
+    out.innerHTML=total("Advocate fee",c.f)+`<div class="basis">${c.r}. Fixed/default amount; the Court may order otherwise (Rule 447).</div>`;
+    out.style.display="block";return;
+  }
+  const a=parseFloat($("amt").value);
+  if(isNaN(a)||a<=0){$("aerr").style.display="block";out.style.display="none";return}
+  const s=slabs(a,ADV,lab); let fee=s.tot, ex="", note="";
+  if(c.m!==1){fee*=c.m; ex+=adj("× ¼ of scale fee ("+c.r+")",INR(fee));}
+  const min=+$("court").value;
+  if(fee<min){ex+=adj("Minimum fee applies (Sch. A, Rule XII)",INR(min));fee=min}
+  if($("two").checked&&c.m===1){
+    if(a>10000){fee*=2;ex+=adj("× 2 advocates (Rule 442(i))",INR(fee))}
+    else note=" Two-advocate fee not available: value must exceed ₹ 10,000.";
+  }
+  out.innerHTML=table(s.rows,ex)+total("Total advocate fee",fee)+
+   `<div class="basis">Basis: Gujarat High Court Rules, 1993 — ${c.r}, scale on value of subject matter. Fee covers services until final decree/order (Rule XIII). Court may allow higher, lower or no fee (Rule 447).${note}</div>`;
+  out.style.display="block";
+}
+$("abtn").onclick=calcAdv;
+$("amt").addEventListener("keydown",e=>{if(e.key==="Enter")calcAdv()});
+
+function calcPro(){
+  const a=parseFloat($("pamt").value), out=$("pres"); $("perr").style.display="none";
+  if(isNaN(a)||a<0){$("perr").style.display="block";out.style.display="none";return}
+  if(a<=1000){out.innerHTML=total("Probate court-fee",0)+`<div class="basis">No fee where value does not exceed ₹ 1,000 — Court-Fees Act, 2004, Section 20(iv).</div>`;out.style.display="block";return}
+  const s=slabs(a,PRO,lab); s.rows=s.rows.filter(r=>r.r>0);
+  let fee=s.tot,ex="";
+  if(fee>75000){fee=75000;ex=adj("Maximum fee cap applied (Sch. I, Art. 10)",INR(75000))}
+  out.innerHTML=table(s.rows,ex)+total("Probate court-fee",fee)+
+   `<div class="basis">Basis: Gujarat Court-Fees Act, 2004 — Schedule I, Article 10 (probate / letters of administration); valuation in Third Schedule form under Section 29. Any earlier Part X Succession Act certificate fee is deducted from the later grant (proviso to Art. 10).</div>`;
+  out.style.display="block";
+}
+$("pbtn").onclick=calcPro;
+$("pamt").addEventListener("keydown",e=>{if(e.key==="Enter")calcPro()});
+
+/* COURT FEE — Gujarat Court-Fees Act, 2004, Sch. I Art. 1 table */
+const cl=x=>Math.ceil(x-1e-9);
+function baseFee(v){
+  if(v<=1000)return 100;
+  if(v<=10000)return 100*cl(v/1000);
+  if(v<=20000)return 1000+250*cl((v-10000)/5000);
+  if(v<=30000)return v<=21000?1525:1525+75*(cl(v/1000)-21);
+  if(v<=50000)return [2375,2500,2650,2800,2950,3100,3250,3400,3550,3700][cl((v-30000)/2000)-1];
+  if(v<=75000)return 4000+300*(cl((v-50000)/5000)-1);
+  if(v<=100000)return 5200+150*cl((v-75000)/5000);
+  if(v<=1e6)return 5950+200*cl((v-1e5)/1e4);
+  if(v<=2e6)return 23950+1200*cl((v-1e6)/1e5);
+  return 35950+500*cl((v-2e6)/1e5);
+}
+const CC=[
+ {t:"Money suit / plaint / memorandum of appeal / cross-objection (Art. 1; Sec. 6(1))",m:1,r:"Sch. I Art. 1; Sec. 6(1)"},
+ {t:"Possession suit under Sec. 6 Specific Relief Act (Art. 2) — ½",m:.5,r:"Sch. I Art. 2"},
+ {t:"Possession between guardian/ward, trustee/beneficiary, principal/agent etc. (Art. 6) — ½",m:.5,r:"Sch. I Art. 6"},
+ {t:"Possession of land/house/garden; partition; specific performance; mortgage (Sec. 6(13)–(19))",m:1,r:"Sec. 6(13)–(19) with Art. 1"},
+ {t:"Set aside award / decree / alienation; other monetary relief (Arts. 3, 4, 5, 7)",m:1,r:"Sch. I Arts. 3, 4, 5, 7"},
+ {t:"Declaration — movable property / recovery of money, no consequential relief (Sec. 6(3)) — ¼, min ₹ 30",m:.25,min:30,r:"Sec. 6(3)(b)–(d)"},
+ {t:"Declaration — with consequential relief other than possession (Sec. 6(3)) — ½",m:.5,min:30,r:"Sec. 6(3), 1st proviso"},
+ {t:"Declaration — with consequential relief incl. possession (Sec. 6(3)) — full",m:1,r:"Sec. 6(3), 2nd proviso"},
+ {t:"Declaration — title / ownership of immovable property (Sec. 6(4)) — ¼, min ₹ 40",m:.25,min:40,r:"Sec. 6(4)"},
+ {t:"Declaration — title, with consequential relief other than possession (Sec. 6(4)) — ½",m:.5,min:40,r:"Sec. 6(4), last proviso"},
+ {t:"Declaration — charge on property (Sec. 6(7)) — ½",m:.5,r:"Sec. 6(7)"},
+ {t:"Declaration — sale / contract / acquisition void (Sec. 6(9), (10)) — ½",m:.5,r:"Sec. 6(9), (10)"},
+ {t:"Suit for accounts (Sec. 6(11)) — min ₹ 100",m:1,min:100,r:"Sec. 6(11)"},
+ {t:"Review of judgment — on/after 90th day (Art. 8) — full",m:1,r:"Sch. I Art. 8"},
+ {t:"Review of judgment — before 90th day (Art. 9) — ½",m:.5,r:"Sch. I Art. 9"},
+ {t:"Land Acquisition reference, Sec. 18 (Art. 15) — 10% of ad valorem fee on difference (Guj. Act 6 of 2014), min ₹ 30",m:.1,min:30,r:"Sch. I Art. 15, as amended by Guj. Act 6 of 2014",h:"Enter the difference between the amount awarded and the amount claimed. Since 2014 the fee is 10% (earlier ½) of the ad valorem fee; the ₹ 30 minimum is carried over from the original text — please verify."},
+ {t:"Motor Vehicles Act appeal — insurer / owner (Sec. 7(2)(i)) — full",m:1,r:"Sec. 7(2)(i)"},
+ {t:"Motor Vehicles Act appeal — any other person (Sec. 7(2)(ii)) — ½",m:.5,r:"Sec. 7(2)(ii)",h:"Any deficit against the full fee is payable if the appeal succeeds (proviso to Sec. 7(2))."},
+ {t:"Income-tax reference, Sec. 256 (Art. 16) / Sales-tax (Art. 17) — ½, min ₹ 100",m:.5,min:100,r:"Sch. I Arts. 16, 17",h:"Enter the amount in dispute (assessed minus admitted)."}
+];
+$("ccase").innerHTML=CC.map((c,i)=>`<option value="${i}">${c.t}</option>`).join("");
+const csync=()=>{$("chint").textContent=CC[$("ccase").value].h||"";$("cres").style.display="none"};
+$("ccase").onchange=csync;csync();
+function calcCF(){
+  const c=CC[$("ccase").value],v=parseFloat($("camt").value),out=$("cres");$("cerr").style.display="none";
+  if(isNaN(v)||v<=0){$("cerr").style.display="block";out.style.display="none";return}
+  const b=baseFee(v),B=[0,1000,10000,20000,30000,50000,75000,100000,1e6,2e6,Infinity],P=x=>(x>=10?x.toFixed(2):x.toFixed(3)).replace(/0+$/,"").replace(/\.$/,"")+"%";
+  let rows="",f=b;
+  for(let i=1;i<B.length&&B[i-1]<v;i++){
+    const hi=Math.min(v,B[i]),w=hi-B[i-1],fee=baseFee(hi)-(B[i-1]?baseFee(B[i-1]):0);
+    const l=B[i]===Infinity?"Above ₹ "+lakh(B[i-1]):(B[i-1]?"₹ "+lakh(B[i-1])+" – ₹ "+lakh(B[i]):"Up to ₹ "+lakh(B[i]));
+    rows+=`<tr><td>${l}</td><td class="r">${INR(w)}</td><td class="r">${P(fee/w*100)}</td><td class="r">${INR(fee)}</td></tr>`;
+  }
+  rows+=`<tr><td><b>Scale fee (Art. 1)</b></td><td class="r">${INR(v)}</td><td class="r"><b>${P(b/v*100)}</b></td><td class="r"><b>${INR(b)}</b></td></tr>`;
+  if(c.m!==1){f=b*c.m;rows+=adj("× "+(c.m===.5?"½":c.m===.25?"¼":"10%")+" of scale fee",INR(f))}
+  if(c.min&&f<c.min){f=c.min;rows+=adj("Minimum fee applies",INR(c.min))}
+  if(f>75000){f=75000;rows+=adj("Maximum fee cap (Art. 1 proviso)",INR(75000))}
+  out.innerHTML=`<div class="tbl"><table><thead><tr><th>Slab of value</th><th class="r">Amount in slab</th><th class="r">Effective rate</th><th class="r">Fee</th></tr></thead><tbody>${rows}</tbody></table></div>`+total("Court-fee payable",f)+
+  `<div class="basis"><b>Overall: ${P(f/v*100)} of the value claimed</b> (${INR(f)} on ${INR(v)}). Slab rates are the effective percentage of each slab, because the Act charges in steps (e.g. per ₹ 1,000, ₹ 5,000 or ₹ 10,000 or part) — the last step of each slab is rounded up.<br>Basis: Gujarat Court-Fees Act, 2004 — ${c.r}; rate table under Schedule I, Article 1. Maximum fee on a plaint/appeal is ₹ 75,000. Valuation is decided by the Court (Sections 8, 14); mode of payment is under Sections 37–38 (as amended in 2015). Multifarious suits carry the aggregate fee (Section 18).</div>`;
+  out.style.display="block";
+}
+$("cbtn").onclick=calcCF;
+$("camt").addEventListener("keydown",e=>{if(e.key==="Enter")calcCF()});
+
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab,.panel").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on");$(b.dataset.t).classList.add("on");
+});
+$("th").onclick=()=>{
+  const d=document.documentElement, dark=d.dataset.theme?d.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;
+  d.dataset.theme=dark?"light":"dark";
+};
+</script>
+</body>
+</html>
