@@ -17,18 +17,20 @@ h1{font-size:1.35rem;letter-spacing:-.02em}
 h2{font-size:1rem;margin:0 0 10px}
 .sub{color:var(--mu);font-size:.85rem;margin:4px 0 16px}
 .tabs{display:flex;gap:4px;border-bottom:1px solid var(--bd);margin-bottom:18px;overflow-x:auto}
-.tab{background:none;border:0;border-bottom:3px solid transparent;color:var(--mu);padding:10px 14px;font:600 .9rem inherit;font-family:inherit;cursor:pointer;white-space:nowrap}
+.tab{background:none;border:0;border-bottom:3px solid transparent;color:var(--mu);padding:10px 14px;font-weight:600;font-size:.9rem;font-family:inherit;cursor:pointer;white-space:nowrap}
 .tab.on{color:var(--ac);border-color:var(--ac)}
 .panel{display:none}.panel.on{display:block}
 label{display:block;font-size:.75rem;font-weight:600;color:var(--mu);margin:0 0 6px;text-transform:uppercase;letter-spacing:.04em}
-input[type=number],select{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:11px 13px;color:var(--tx);font:500 1rem inherit;font-family:inherit;outline:0}
+input[type=number],select{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:11px 13px;color:var(--tx);font-weight:500;font-size:1rem;font-family:inherit;outline:0}
 input:focus,select:focus{border-color:var(--ac)}
 .f{margin-bottom:14px}
 .row{display:flex;gap:10px}.row>*{flex:1}
 .chk{display:flex;gap:8px;align-items:center;font-size:.9rem;margin-bottom:14px}
 .chk input{width:18px;height:18px}
-.btn{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:12px 20px;font:600 .95rem inherit;font-family:inherit;cursor:pointer;width:100%}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:12px 20px;font-weight:600;font-size:.95rem;font-family:inherit;cursor:pointer;width:100%}
 .btn:hover{background:var(--ac2)}
+.tab:focus-visible,.btn:focus-visible,.th:focus-visible,a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+@media print{.tabs,.btn,.th{display:none}.panel{display:block!important}body{background:#fff}.card{box-shadow:none}}
 .hint{font-size:.8rem;color:var(--mu);margin:-8px 0 14px}
 .err{color:#dc2626;font-size:.85rem;margin-bottom:10px;display:none}
 .res{display:none;margin-top:18px}
@@ -61,11 +63,11 @@ a{color:var(--ac);word-break:break-all}
     <button class="th" id="th" type="button">Theme</button>
   </div>
 
-  <div class="tabs" role="tablist">
-    <button class="tab on" data-t="adv">Advocate Fee (Taxation)</button>
-    <button class="tab" data-t="cf">Court Fee (Plaint / Appeal)</button>
-    <button class="tab" data-t="pro">Probate Court-Fee</button>
-    <button class="tab" data-t="src">Sources &amp; Disclaimer</button>
+  <div class="tabs" role="tablist" aria-label="Fee calculators">
+    <button aria-selected="true" class="tab on" role="tab" aria-controls="adv" data-t="adv">Advocate Fee (Taxation)</button>
+    <button class="tab" role="tab" aria-controls="cf" data-t="cf">Court Fee (Plaint / Appeal)</button>
+    <button class="tab" role="tab" aria-controls="pro" data-t="pro">Probate Court-Fee</button>
+    <button class="tab" role="tab" aria-controls="src" data-t="src">Sources &amp; Disclaimer</button>
   </div>
 
   <!-- ADVOCATE -->
@@ -81,6 +83,7 @@ a{color:var(--ac);word-break:break-all}
         <option value="30">Civil Judge (Small Cause / Mamlatdar type suit) — min ₹ 30</option>
       </select></div>
     <label class="chk" id="twoBox"><input type="checkbox" id="two"> Party engaged two advocates (Rule 442(i); value above ₹ 10,000, contested)</label>
+    <p class="hint">Landlord–tenant matters: value is the court-fee value (annual rent), not the jurisdiction value, unless the Court directs otherwise (Sch. A, Rule I, Exception).</p>
     <p class="err" id="aerr">Please enter a valid positive amount.</p>
     <button class="btn" type="button" id="abtn">Calculate advocate fee</button>
     <div class="res" id="ares"></div>
@@ -155,7 +158,7 @@ a{color:var(--ac);word-break:break-all}
       <b style="display:inline">The developer of this page accepts no responsibility or liability</b> for any error, omission, outdated rate, or for any loss, damage, penalty, shortfall of court-fee or dispute arising from the use of, or reliance on, any figure shown here. You use the calculator entirely at your own risk. Always verify the result against the official text at the source links above and with the Court's fee or taxing office, or a qualified advocate, before paying court-fee, filing, or preparing a bill of costs.</div>
   </div>
 </div>
-<p class="foot">For information only — no liability of the developer. Sources: Gujarat High Court Rules, 1993 (Rules 441–447, Sch. A) • Gujarat Court-Fees Act, 2004 (Ss. 6, 20, 29; Sch. I Art. 10)</p>
+<p class="foot">Version 1.0 · checked 29 Sep 2026 against GHC Rules (amended 12.11.2024) and Gujarat Court-Fees Act, 2004 as amended to 2016.<br>For information only — no liability of the developer. Sources: Gujarat High Court Rules, 1993 (Rules 441–447, Sch. A) • Gujarat Court-Fees Act, 2004 (Ss. 6, 20, 29; Sch. I Art. 10)</p>
 </div>
 
 <script>
@@ -169,8 +172,8 @@ const CASES=[
  {k:"ii",t:"Not decided on merits; summary suit; claim admitted before evidence; other proceedings (Rule II) — ¼ fee",m:.25,r:"Sch. A, Rule II"},
  {k:"vi",t:"Execution proceedings (Rule VI) — ¼ fee",m:.25,r:"Sch. A, Rule VI"},
  {k:"iii",t:"Subject matter incapable of valuation (Rule III)",f:100,r:"Sch. A, Rule III — Court's discretion; ₹ 100 in absence of orders"},
- {k:"iv1",t:"Matrimonial — undefended (Rule IV)",f:75,r:"Sch. A, Rule IV — ordinarily ₹ 75"},
- {k:"iv2",t:"Matrimonial — contested (Rule IV)",f:200,r:"Sch. A, Rule IV — ₹ 200 by default; ordinarily not above ₹ 500 if Court so orders"},
+ {k:"iv1",t:"Matrimonial suit/petition — undefended (Rule IV)",f:75,r:"Sch. A, Rule IV — ordinarily ₹ 75"},
+ {k:"iv2",t:"Matrimonial suit/petition — contested (Rule IV)",f:200,r:"Sch. A, Rule IV — ₹ 200 by default; ordinarily not above ₹ 500 if Court so orders"},
  {k:"vii1",t:"Application under Article 226 (Rule VII)",f:250,r:"Sch. A, Rule VII — Court may allow higher fee"},
  {k:"vii2",t:"Application under Article 227 (Rule VII)",f:150,r:"Sch. A, Rule VII — Court may allow higher fee"},
  {k:"viii",t:"Tax reference (Income-tax, Sales-tax etc.) (Rule VIII)",f:300,r:"Sch. A, Rule VIII — ordinarily ₹ 300; Court may award up to ₹ 1,000"},
@@ -269,7 +272,7 @@ const CC=[
  {t:"Declaration — with consequential relief incl. possession (Sec. 6(3)) — full",m:1,r:"Sec. 6(3), 2nd proviso"},
  {t:"Declaration — title / ownership of immovable property (Sec. 6(4)) — ¼, min ₹ 40",m:.25,min:40,r:"Sec. 6(4)"},
  {t:"Declaration — title, with consequential relief other than possession (Sec. 6(4)) — ½",m:.5,min:40,r:"Sec. 6(4), last proviso"},
- {t:"Declaration — charge on property (Sec. 6(7)) — ½",m:.5,r:"Sec. 6(7)"},
+ {t:"Declaration — charge on property (Sec. 6(7)) — ½",m:.5,r:"Sec. 6(7)",h:"Full fee applies if injunction or other consequential relief is also sought (proviso to Sec. 6(7))."},
  {t:"Declaration — sale / contract / acquisition void (Sec. 6(9), (10)) — ½",m:.5,r:"Sec. 6(9), (10)"},
  {t:"Suit for accounts (Sec. 6(11)) — min ₹ 100",m:1,min:100,r:"Sec. 6(11)"},
  {t:"Review of judgment — on/after 90th day (Art. 8) — full",m:1,r:"Sch. I Art. 8"},
@@ -306,6 +309,7 @@ $("camt").addEventListener("keydown",e=>{if(e.key==="Enter")calcCF()});
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
   document.querySelectorAll(".tab,.panel").forEach(x=>x.classList.remove("on"));
   b.classList.add("on");$(b.dataset.t).classList.add("on");
+  document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===b));
 });
 $("th").onclick=()=>{
   const d=document.documentElement, dark=d.dataset.theme?d.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;
