@@ -40,6 +40,7 @@ th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--bd)}
 th{font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;color:var(--mu)}
 td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
 tr:last-child td{border-bottom:0}
+tr.sum td{font-weight:700;color:var(--ac);background:color-mix(in srgb,var(--ac) 12%,transparent);border-top:2px solid var(--ac)}
 .adj td{color:var(--mu);font-style:italic}
 .total{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;background:var(--ac);color:#fff;border-radius:12px;padding:15px 18px}
 .total b{font-size:1.5rem;font-variant-numeric:tabular-nums}
@@ -198,9 +199,10 @@ function slabs(amt,S,labelFn){
 }
 const lab=(p,u)=>u===Infinity?"Above ₹ "+lakh(p):(p===0?"Up to ₹ "+lakh(u):"₹ "+lakh(p)+" – ₹ "+lakh(u));
 const pct=r=>(r*100).toString().replace(/\.0+$/,"")+"%";
-function table(rows,extra){
+const EP=x=>(x>=10?x.toFixed(2):x.toFixed(3)).replace(/0+$/,"").replace(/\.$/,"")+"%";
+function table(rows,extra,sm){
   return `<div class="tbl"><table><thead><tr><th>Slab</th><th class="r">Amount in slab</th><th class="r">Rate</th><th class="r">Fee</th></tr></thead><tbody>`+
-   rows.map(x=>`<tr><td>${x.l}</td><td class="r">${INR(x.w)}</td><td class="r">${pct(x.r)}</td><td class="r">${INR(x.fee)}</td></tr>`).join("")+(extra||"")+`</tbody></table></div>`;
+   rows.map(x=>`<tr><td>${x.l}</td><td class="r">${INR(x.w)}</td><td class="r">${pct(x.r)}</td><td class="r">${INR(x.fee)}</td></tr>`).join("")+(sm?`<tr class="sum"><td>${sm.l}</td><td class="r">${INR(sm.w)}</td><td class="r">${EP(sm.fee/sm.w*100)}</td><td class="r">${INR(sm.fee)}</td></tr>`:"")+(extra||"")+`</tbody></table></div>`;
 }
 const adj=(t,v)=>`<tr class="adj"><td colspan="3">${t}</td><td class="r">${v}</td></tr>`;
 const total=(l,v)=>`<div class="total"><span>${l}</span><b>${INR(v)}</b></div>`;
@@ -229,7 +231,7 @@ function calcAdv(){
     if(a>10000){fee*=2;ex+=adj("× 2 advocates (Rule 442(i))",INR(fee))}
     else note=" Two-advocate fee not available: value must exceed ₹ 10,000.";
   }
-  out.innerHTML=table(s.rows,ex)+total("Total advocate fee",fee)+
+  out.innerHTML=table(s.rows,ex,{l:"Scale fee (Sch. A, Rule I)",w:a,fee:s.tot})+total("Total advocate fee",fee)+
    `<div class="basis">Basis: Gujarat High Court Rules, 1993 — ${c.r}, scale on value of subject matter. Fee covers services until final decree/order (Rule XIII). Court may allow higher, lower or no fee (Rule 447).${note}</div>`;
   out.style.display="block";
 }
@@ -243,7 +245,7 @@ function calcPro(){
   const s=slabs(a,PRO,lab); s.rows=s.rows.filter(r=>r.r>0);
   let fee=s.tot,ex="";
   if(fee>75000){fee=75000;ex=adj("Maximum fee cap applied (Sch. I, Art. 10)",INR(75000))}
-  out.innerHTML=table(s.rows,ex)+total("Probate court-fee",fee)+
+  out.innerHTML=table(s.rows,ex,{l:"Scale fee (Sch. I, Art. 10)",w:a,fee:s.tot})+total("Probate court-fee",fee)+
    `<div class="basis">Basis: Gujarat Court-Fees Act, 2004 — Schedule I, Article 10 (probate / letters of administration); valuation in Third Schedule form under Section 29. Any earlier Part X Succession Act certificate fee is deducted from the later grant (proviso to Art. 10).</div>`;
   out.style.display="block";
 }
@@ -298,7 +300,7 @@ function calcCF(){
     const l=B[i]===Infinity?"Above ₹ "+lakh(B[i-1]):(B[i-1]?"₹ "+lakh(B[i-1])+" – ₹ "+lakh(B[i]):"Up to ₹ "+lakh(B[i]));
     rows+=`<tr><td>${l}</td><td class="r">${INR(w)}</td><td class="r">${P(fee/w*100)}</td><td class="r">${INR(fee)}</td></tr>`;
   }
-  rows+=`<tr><td><b>Scale fee (Art. 1)</b></td><td class="r">${INR(v)}</td><td class="r"><b>${P(b/v*100)}</b></td><td class="r"><b>${INR(b)}</b></td></tr>`;
+  rows+=`<tr class="sum"><td>Scale fee (Art. 1)</td><td class="r">${INR(v)}</td><td class="r">${P(b/v*100)}</td><td class="r">${INR(b)}</td></tr>`;
   if(c.m!==1){f=b*c.m;rows+=adj("× "+(c.m===.5?"½":c.m===.25?"¼":"10%")+" of scale fee",INR(f))}
   if(c.min&&f<c.min){f=c.min;rows+=adj("Minimum fee applies",INR(c.min))}
   if(f>75000){f=75000;rows+=adj("Maximum fee cap (Art. 1 proviso)",INR(75000))}
